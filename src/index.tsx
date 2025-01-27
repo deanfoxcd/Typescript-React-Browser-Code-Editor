@@ -4,6 +4,7 @@ import * as esbuild from 'esbuild-wasm';
 
 import { unpkgPathPlugin } from './plugins/unpkg-path-plugin';
 import { fetchPlugin } from './plugins/fetch-plugin';
+import CodeEditor from './components/code-editor';
 
 const el = document.getElementById('root');
 
@@ -76,6 +77,7 @@ const App = () => {
 
   return (
     <div>
+      <CodeEditor />
       <textarea
         value={input}
         onChange={(e) => setInput(e.target.value)}
