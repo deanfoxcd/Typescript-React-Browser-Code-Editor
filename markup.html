@@ -6,7 +6,12 @@
       window.addEventListener(
         'message',
         (e) => {
-          console.log(e.data);
+          try {
+            eval(e.data);
+          } catch (err) {
+            const root = document.getElementById('root');
+            root.innerHTML = '<div>' + err + '</div>';
+          }
         },
         false
       );

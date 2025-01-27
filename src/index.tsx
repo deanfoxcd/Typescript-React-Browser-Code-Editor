@@ -13,7 +13,6 @@ const App = () => {
   const ref = useRef<any>();
   const iframe = useRef<any>();
   const [input, setInput] = useState('');
-  const [code, setCode] = useState('');
 
   const startService = async function () {
     ref.current = await esbuild.startService({
@@ -34,6 +33,8 @@ const App = () => {
     //   target: 'es2015',
     // });
 
+    iframe.current.srcdoc = html;
+
     const result = await ref.current.build({
       entryPoints: ['index.js'],
       bundle: true,
@@ -53,12 +54,18 @@ const App = () => {
     <html>
       <head></head>
       <body>
-        <div id="'root'"></div>
+        <div id="root"></div>
         <script>
           window.addEventListener(
             'message',
             (e) => {
-              eval(e.data);
+              try {
+                eval(e.data);
+              } catch (err) {
+                const root = document.getElementById('root');
+                root.innerHTML = '<div style="color: red;"><h4>Runtime Error</h4>' + err + '</div>';
+                console.error(err)
+              }
             },
             false
           );
@@ -76,8 +83,12 @@ const App = () => {
       <div>
         <button onClick={handleClick}>Submit</button>
       </div>
-      <pre>{code}</pre>
-      <iframe ref={iframe} srcDoc={html} sandbox='allow-scripts' />
+      <iframe
+        title='preview'
+        ref={iframe}
+        srcDoc={html}
+        sandbox='allow-scripts'
+      />
     </div>
   );
 };
