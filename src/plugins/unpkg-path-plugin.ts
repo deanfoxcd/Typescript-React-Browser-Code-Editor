@@ -17,7 +17,7 @@ export const unpkgPathPlugin = () => {
         };
       });
 
-      build.onResolve({ filter: /.*/ }, (args: any) => {
+      build.onResolve({ filter: /.*/ }, async (args: any) => {
         return {
           namespace: 'a',
           path: `https://unpkg.com/${args.path}`,
