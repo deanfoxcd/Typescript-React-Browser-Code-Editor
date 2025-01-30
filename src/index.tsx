@@ -16,8 +16,4 @@ const App = () => {
   );
 };
 
-root.render(
-  <StrictMode>
-    <App />
-  </StrictMode>
-);
+root.render(<App />);

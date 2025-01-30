@@ -1,6 +1,6 @@
 import { ResizableBox, ResizableBoxProps } from 'react-resizable';
 import './resizable.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 interface ResizableProps {
   direction: 'horizontal' | 'vertical';
@@ -9,11 +9,41 @@ interface ResizableProps {
 
 const Resizable: React.FC<ResizableProps> = function ({ direction, children }) {
   let resizableBoxProps: ResizableBoxProps;
+  const [innerHeight, setInnerHeight] = useState(window.innerHeight);
+  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+  const [width, setWidth] = useState(Math.floor(window.innerWidth * 0.75));
 
   useEffect(() => {
+    let timer: any;
     const listener = () => {
-      console.log('Size');
+      if (timer) {
+        clearTimeout(timer);
+      }
+
+      //   timer = setTimeout(() => {
+      //     setInnerHeight((prevHeight) => {
+      //       if (prevHeight !== window.innerHeight) return window.innerHeight;
+      //       return prevHeight;
+      //     });
+      //     setInnerWidth((prevWidth) => {
+      //       const newWidth = Math.floor(window.innerWidth);
+      //       if (prevWidth !== newWidth) return newWidth;
+      //       return prevWidth;
+      //     });
+      //     if (window.innerWidth * 0.75 < width)
+      //       setWidth(Math.floor(window.innerWidth * 0.75));
+      //   }, 100);
+      // };
+
+      timer = setTimeout(() => {
+        setInnerHeight(window.innerHeight);
+        setInnerWidth(window.innerWidth);
+        if (window.innerWidth * 0.75 < width) {
+          setWidth(Math.floor(window.innerWidth * 0.75));
+        }
+      }, 100);
     };
+
     window.addEventListener('resize', listener);
 
     return () => {
@@ -24,19 +54,22 @@ const Resizable: React.FC<ResizableProps> = function ({ direction, children }) {
   if (direction === 'horizontal') {
     resizableBoxProps = {
       className: 'resize-horizontal',
+      minConstraints: [Math.floor(innerWidth * 0.2), Infinity],
+      maxConstraints: [Math.floor(innerWidth * 0.75), Infinity],
       height: Infinity,
-      width: window.innerWidth * 0.75,
+      width,
       resizeHandles: ['e'],
-      maxConstraints: [window.innerWidth * 0.75, Infinity],
-      minConstraints: [window.innerWidth * 0.2, Infinity],
+      onResizeStop: (event, data) => {
+        setWidth(data.size.width);
+      },
     };
   } else {
     resizableBoxProps = {
+      minConstraints: [Infinity, 24],
+      maxConstraints: [Infinity, Math.floor(innerHeight * 0.9)],
       height: 300,
       width: Infinity,
       resizeHandles: ['s'],
-      maxConstraints: [Infinity, window.innerHeight * 0.9],
-      minConstraints: [Infinity, 24],
     };
   }
 
