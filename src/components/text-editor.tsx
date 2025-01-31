@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 
 const TextEditor: React.FC = function () {
   const [editing, setEditing] = useState(false);
+  const [value, setValue] = useState('# Header');
   const editorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -28,14 +29,16 @@ const TextEditor: React.FC = function () {
   if (editing) {
     return (
       <div className='text-editor' ref={editorRef}>
-        <MDEditor />
+        <MDEditor value={value} onChange={(v) => setValue(v || '')} />
       </div>
     );
   }
 
   return (
-    <div className='text-editor' onClick={() => setEditing(true)}>
-      <MDEditor.Markdown source={'# Header'} />
+    <div className='text-editor card' onClick={() => setEditing(true)}>
+      <div className='card-content'>
+        <MDEditor.Markdown source={value} />
+      </div>
     </div>
   );
 };
