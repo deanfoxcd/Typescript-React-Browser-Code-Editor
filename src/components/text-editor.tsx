@@ -1,12 +1,20 @@
 import MDEditor from '@uiw/react-md-editor';
-import { useEffect, useState } from 'react';
+import { editor } from 'monaco-editor';
+import { useEffect, useRef, useState } from 'react';
 
 const TextEditor: React.FC = function () {
   const [editing, setEditing] = useState(false);
+  const editorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const listener = () => {
-      setEditing(false);
+    const listener = (e: MouseEvent) => {
+      if (
+        editorRef.current &&
+        e.target &&
+        editorRef.current.contains(e.target as Node)
+      ) {
+        e.stopPropagation();
+      } else setEditing(false);
     };
 
     document.addEventListener('click', listener, { capture: true });
@@ -18,7 +26,7 @@ const TextEditor: React.FC = function () {
 
   if (editing) {
     return (
-      <div>
+      <div ref={editorRef}>
         <MDEditor />
       </div>
     );
