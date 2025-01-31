@@ -1,4 +1,5 @@
 import MDEditor from '@uiw/react-md-editor';
+import './text-editor.css';
 import { editor } from 'monaco-editor';
 import { useEffect, useRef, useState } from 'react';
 
