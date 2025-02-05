@@ -5,3 +5,12 @@ export interface Cell {
   type: CellTypes;
   content: string;
 }
+
+interface CellsState {
+  loading: boolean;
+  error: string | null;
+  order: string[];
+  data: {
+    [key: string]: Cell;
+  };
+}
