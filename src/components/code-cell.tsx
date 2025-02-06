@@ -22,11 +22,22 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
 
     const totalCode = [
       `
+        import _React from 'react';
+        import _ReactDOM from 'react-dom/client';
+        
+        const rootElement = document.querySelector('#root');
+        const root = rootElement ? _ReactDOM.createRoot(rootElement) : null;
+
         function show(value) {
+
           if (typeof value === 'object') {
-            document.querySelector('#root').innerHTML = JSON.stringify(value);
+            if (value.$$typeof && value.props) {
+              root.render(value);
+            } else {
+              rootElement.innerHTML = JSON.stringify(value);
+            }
           } else {
-            document.querySelector('#root').innerHTML = value;
+            rootElement.innerHTML = value;
           }
         };
       `,
@@ -36,7 +47,6 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
         totalCode.push(c.content);
       }
       if (c.id === cell.id) {
-        console.log('break');
         break;
       }
     }
@@ -46,7 +56,6 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
 
     return totalCode;
   });
-  console.log(cumulativeCode);
 
   useEffect(() => {
     if (!bundle) {
