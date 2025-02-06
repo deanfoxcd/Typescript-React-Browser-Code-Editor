@@ -1,9 +1,9 @@
-import MDEditor from '@uiw/react-md-editor';
 import './text-editor.css';
-import { editor } from 'monaco-editor';
+import MDEditor from '@uiw/react-md-editor';
 import { useEffect, useRef, useState } from 'react';
-import { Cell } from '../state';
+
 import { useActions } from '../hooks/use-actions';
+import { Cell } from '../state';
 
 interface TextEditorProps {
   cell: Cell;

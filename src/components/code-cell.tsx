@@ -1,12 +1,14 @@
 import 'bulmaswatch/superhero/bulmaswatch.min.css';
+import './code-cell.css';
 import { useEffect } from 'react';
-import { useActions } from '../hooks/use-actions';
-import { useTypedSelector } from '../hooks/use-typed-selector';
-import { Cell } from '../state';
+
 import CodeEditor from './code-editor';
 import Preview from './Preview';
 import Resizable from './resizable';
-import './code-cell.css';
+
+import { useActions } from '../hooks/use-actions';
+import { useTypedSelector } from '../hooks/use-typed-selector';
+import { Cell } from '../state';
 import { useCumulativeCode } from '../hooks/useCumulativeCode';
 
 interface CodeCellProps {

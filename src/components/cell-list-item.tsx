@@ -1,10 +1,9 @@
-import { CellTypes } from '../state/cell';
-import { Cell } from '../state';
-import { JSXElement } from 'jscodeshift';
+import './cell-list-item.css';
+import ActionBar from './action-bar';
 import CodeCell from './code-cell';
 import TextEditor from './text-editor';
-import ActionBar from './action-bar';
-import './cell-list-item.css';
+
+import { Cell } from '../state';
 
 interface CellListItemProps {
   cell: Cell;

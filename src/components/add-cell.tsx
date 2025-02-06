@@ -1,5 +1,6 @@
-import { useActions } from '../hooks/use-actions';
 import './add-cell.css';
+
+import { useActions } from '../hooks/use-actions';
 
 interface AddCellProps {
   previousCellId: string | null;

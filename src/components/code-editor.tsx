@@ -1,10 +1,11 @@
-import './code-editor.css';
-import MonacoEditor, { EditorDidMount } from '@monaco-editor/react';
-import { useRef } from 'react';
 import prettier from 'prettier';
 import parser from 'prettier/parser-babel';
 import Highlighter from 'monaco-jsx-highlighter';
 import codeShift from 'jscodeshift';
+import MonacoEditor, { EditorDidMount } from '@monaco-editor/react';
+import { useRef } from 'react';
+
+import './code-editor.css';
 import './syntax.css';
 
 interface CodeEditorProps {
