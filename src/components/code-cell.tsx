@@ -20,17 +20,33 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
     const { data, order } = state.cells;
     const orderedCells = order.map((id) => data[id]);
 
-    const cumulativeCode = [];
+    const totalCode = [
+      `
+        function show(value) {
+          if (typeof value === 'object') {
+            document.querySelector('#root').innerHTML = JSON.stringify(value);
+          } else {
+            document.querySelector('#root').innerHTML = value;
+          }
+        };
+      `,
+    ];
     for (let c of orderedCells) {
-      if (c.type === 'code') cumulativeCode.push(c.content);
-      if (c.id === cell.id) break;
+      if (c.type === 'code') {
+        totalCode.push(c.content);
+      }
+      if (c.id === cell.id) {
+        console.log('break');
+        break;
+      }
     }
 
     // const codeCells = orderedCells.filter((cell) => cell.type === 'code');
     // const codeStrings = codeCells.map((cell) => cell.content);
 
-    return cumulativeCode;
+    return totalCode;
   });
+  console.log(cumulativeCode);
 
   useEffect(() => {
     if (!bundle) {
